@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="3.0" xmlns="https://jakarta.ee/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
+    
+    <persistence-unit name="mapex-pu" transaction-type="RESOURCE_LOCAL">
+
+        <!-- Hibernate as the JPA provider -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- All @Entity classes must be listed here -->
+        <class>dev.ayoubelb25.mapex.model.Transaction</class>
+        <class>dev.ayoubelb25.mapex.model.Client</class>
+        <class>dev.ayoubelb25.mapex.model.ClientFieldConfig</class>
+        <class>dev.ayoubelb25.mapex.model.SystemList</class>    
+        <class>dev.ayoubelb25.mapex.model.DataMapping</class>
+        <class>dev.ayoubelb25.mapex.model.TransactionView</class>
+        <class>dev.ayoubelb25.mapex.model.User</class>
+
+        <properties>
+            <!-- Dialect: Hibernate generates SQL tailored for PostgreSQL -->
+            <property name="hibernate.dialect"
+                      value="org.hibernate.dialect.PostgreSQLDialect"/>
+            
+            <property name="hibernate.connection.charSet" value="UTF-8"/>
+
+            
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+
+            <!-- Show generated SQL in the WildFly console — turn off in prod -->
+            <property name="hibernate.show_sql"   value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+           
+        </properties>
+
+    </persistence-unit>
+
+</persistence>
