@@ -49,6 +49,7 @@ ollama/
 
 # DB credentials — never commit this file
 src/main/resources/db.properties
+src/main/resources/db.docker.properties
 
 # Maven build output
 target/

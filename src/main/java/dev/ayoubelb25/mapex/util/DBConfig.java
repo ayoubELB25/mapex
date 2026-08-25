@@ -10,6 +10,8 @@ import jakarta.persistence.Persistence;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -46,6 +48,23 @@ public class DBConfig {
 
     private Properties loadProperties() {
         Properties props = new Properties();
+        String externalPath = System.getProperty("DB_CONFIG_PATH");
+        if (externalPath == null || externalPath.isBlank()) {
+            externalPath = System.getenv("DB_CONFIG_PATH");
+        }
+
+        if (externalPath != null && !externalPath.isBlank()) {
+            Path path = Path.of(externalPath);
+            if (Files.exists(path)) {
+                try (InputStream is = Files.newInputStream(path)) {
+                    props.load(is);
+                    return props;
+                } catch (IOException e) {
+                    throw new RuntimeException("Failed to load db.properties", e);
+                }
+            }
+        }
+
         try (InputStream is = getClass()
                 .getClassLoader()
                 .getResourceAsStream("db.properties")) {
